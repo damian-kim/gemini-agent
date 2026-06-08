@@ -1,0 +1,7 @@
+[Unit]
+Description=Gemini Agent OS Morning Brief Trigger
+After=agent-os.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/curl -X POST http://localhost:8000/brief/morning

@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "decisions": [
+    {
+      "id": "dec_20260330_001",
+      "date": "2026-03-30",
+      "domain": "Configuration",
+      "decision": "Use AGENTS.md instead of CLAUDE.md",
+      "reasoning": "The target stack is Gemini/VS Code rather than Claude/Cowork.",
+      "tradeoff": "Loses compatibility with Claude-specific tooling in favor of Gemini/VS Code alignment.",
+      "source": "Decisions.md"
+    },
+    {
+      "id": "dec_20260330_002",
+      "date": "2026-03-30",
+      "domain": "API Integration",
+      "decision": "Use direct Gemini API calls for production rather than Gemini CLI",
+      "reasoning": "API calls are easier to secure, log, and constrain.",
+      "tradeoff": "Requires writing custom integration code instead of using out-of-the-box CLI commands.",
+      "source": "Decisions.md"
+    },
+    {
+      "id": "dec_20260330_003",
+      "date": "2026-03-30",
+      "domain": "Data Storage",
+      "decision": "Use local files as source of truth before introducing databases or external connectors",
+      "reasoning": "Simplifies initial architecture and avoids premature database setup.",
+      "tradeoff": "Limits scalability and concurrent write capabilities compared to a dedicated database.",
+      "source": "Decisions.md"
+    }
+  ]
+}

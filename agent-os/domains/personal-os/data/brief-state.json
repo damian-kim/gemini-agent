@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "last_brief_at": "2026-06-07T19:24:43.757433+00:00",
+  "last_brief_file": "briefs/archive/brief-2026-06-07.md",
+  "summary": "Advancing the Gemini Agent OS v0 build from development to production by configuring and testing the Docker deployment on the Oracle Cloud Infrastructure Ampere A1 Flex VPS.",
+  "top_priorities": [
+    "Deploy Gemini Agent OS MVP to Oracle VPS (task_20260607_001)",
+    "Resolve Data Layer Backup Status"
+  ],
+  "open_questions": [
+    "Should the production app on Oracle VPS be exposed publicly with HTTPS or kept private through Tailscale/VPN?",
+    "Which external connector should be added first after v0 (Gmail, Google Calendar, Notion, GitHub, or another service)?",
+    "Which domain should be built next after personal-os (e.g., code-projects, school, or career)?"
+  ]
+}

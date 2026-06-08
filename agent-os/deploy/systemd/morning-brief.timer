@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily morning brief at 08:00 America/Chicago
+RefuseManualStart=no
+RefuseManualStop=no
+
+[Timer]
+OnCalendar=*-*-* 08:00:00 America/Chicago
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "updated_at": "2026-06-07T20:00:55.889170+00:00",
+  "timezone": "America/Chicago",
+  "brief": {
+    "latest_file": "briefs/archive/brief-2026-06-07.md",
+    "summary": "Advancing the Gemini Agent OS v0 build from development to production by configuring and testing the Docker deployment on the Oracle Cloud Infrastructure Ampere A1 Flex VPS.",
+    "generated_at": "2026-06-07T19:24:43.757433+00:00"
+  },
+  "tasks": {
+    "active_count": 9,
+    "blocked_count": 0,
+    "top": [
+      {
+        "id": "task_20260607_001",
+        "title": "Deploy Gemini Agent OS MVP to Oracle VPS",
+        "priority": "high",
+        "status": "active"
+      },
+      {
+        "id": "task_20260607_019",
+        "title": "Prepare Oracle VPS for Gemini Agent OS deployment",
+        "priority": "high",
+        "status": "active"
+      },
+      {
+        "id": "task_20260607_020",
+        "title": "Deploy Gemini Agent OS application to VPS",
+        "priority": "high",
+        "status": "active"
+      },
+      {
+        "id": "task_20260607_021",
+        "title": "Verify Gemini Agent OS functionality on VPS",
+        "priority": "high",
+        "status": "active"
+      },
+      {
+        "id": "task_20240120_001",
+        "title": "Test Gemini chat endpoint locally within Docker container",
+        "priority": "high",
+        "status": "active"
+      }
+    ]
+  },
+  "projects": [
+    {
+      "id": "proj_gemini_agent_os",
+      "name": "Gemini Agent OS",
+      "status": "active",
+      "current_phase": "v0 build"
+    },
+    {
+      "id": "proj_resume_portfolio",
+      "name": "Resume Portfolio Website",
+      "status": "active",
+      "current_phase": "completed"
+    }
+  ],
+  "system_health": {
+    "app_status": "ok",
+    "gemini_configured": true,
+    "deployment_status": "not_deployed_yet"
+  }
+}

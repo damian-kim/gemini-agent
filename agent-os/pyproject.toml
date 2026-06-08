@@ -1,0 +1,17 @@
+[project]
+name = "gemini-agent-os"
+version = "0.1.0"
+description = "A self-hosted personal AI operating system powered by Gemini"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.110.0",
+    "uvicorn[standard]>=0.28.0",
+    "google-genai>=0.1.1",
+    "pydantic>=2.6.0",
+    "python-dotenv>=1.0.1",
+    "aiofiles>=23.0.0"
+]
+
+[build-system]
+requires = ["setuptools>=61.0.0"]
+build-backend = "setuptools.build_meta"

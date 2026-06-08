@@ -1,0 +1,17 @@
+[Unit]
+Description=Gemini Agent OS Service (Docker Compose Stack)
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+WorkingDirectory=/data/agent-os
+ExecStart=/usr/bin/docker compose -f deploy/docker-compose.yml up
+ExecStop=/usr/bin/docker compose -f deploy/docker-compose.yml down
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=agent-os
+
+[Install]
+WantedBy=multi-user.target

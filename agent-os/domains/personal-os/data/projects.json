@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0.0",
+  "updated_at": "2026-06-07T20:00:48.779372+00:00",
+  "projects": [
+    {
+      "id": "proj_gemini_agent_os",
+      "slug": "gemini-agent-os",
+      "name": "Gemini Agent OS",
+      "status": "active",
+      "domain": "personal-os",
+      "problem": "Build a self-hosted AI operating system using VS Code, Gemini, and Oracle VPS.",
+      "success_criteria": [
+        "FastAPI app runs locally and on VPS",
+        "Gemini chat endpoint works",
+        "Morning brief generates and archives",
+        "Dashboard reads dashboard.json",
+        "Guardrails prevent automated writes to inputs/"
+      ],
+      "current_phase": "v0 build",
+      "owner": "Developer",
+      "last_reviewed": "2024-11-15",
+      "links": []
+    },
+    {
+      "id": "proj_resume_portfolio",
+      "slug": "resume-portfolio",
+      "name": "Resume Portfolio Website",
+      "status": "active",
+      "domain": "web-development",
+      "problem": "Create a high-performance, responsive personal website to showcase engineering projects, technical stack, and professional background.",
+      "success_criteria": [
+        "Responsive UI that displays cleanly on mobile and desktop",
+        "Fast load times and optimization for media assets/project showcases",
+        "Easily updatable content structure"
+      ],
+      "current_phase": "completed",
+      "owner": "Developer",
+      "last_reviewed": "2024-11-15",
+      "links": []
+    }
+  ]
+}

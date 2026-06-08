@@ -1,0 +1,4 @@
+# Caddy reverse proxy configurations
+:80 {
+    reverse_proxy agent-os:8000
+}

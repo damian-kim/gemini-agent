@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Agent OS - Personal Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f5f3eb; /* Premium warm beige / alabaster */
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-border: rgba(45, 43, 40, 0.07);
+            --text-primary: #2d2b27; /* Sophisticated warm charcoal */
+            --text-secondary: #7c7870; /* Soft warm gray */
+            --accent-color: #4f46e5; /* Premium indigo */
+            --accent-glow: rgba(79, 70, 229, 0.08);
+            --success-color: #0d9488; /* Teal success */
+            --success-glow: rgba(13, 148, 136, 0.08);
+            --warning-color: #d97706; /* Warm amber */
+            --warning-glow: rgba(217, 119, 6, 0.08);
+            --font-display: 'Outfit', sans-serif;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 2.5rem 2rem;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.05) 0px, transparent 60%),
+                radial-gradient(at 100% 100%, rgba(217, 119, 6, 0.04) 0px, transparent 60%);
+            background-attachment: fixed;
+            line-height: 1.5;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 50%, #4f46e5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.8px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .refresh-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid var(--card-border);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .refresh-button:hover {
+            color: var(--accent-color);
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(79, 70, 229, 0.2);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.05);
+        }
+
+        .refresh-button:active {
+            transform: scale(0.97);
+        }
+
+        .refresh-icon {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+            transition: transform 0.5s ease;
+        }
+
+        .refresh-button:hover .refresh-icon {
+            transform: rotate(180deg);
+        }
+
+        .refreshing .refresh-icon {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .system-time {
+            font-family: var(--font-display);
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(8px);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.75rem;
+        }
+
+        @media (max-width: 900px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 1.75rem;
+            box-shadow: 0 10px 30px 0 rgba(45, 43, 40, 0.03);
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 40px 0 rgba(79, 70, 229, 0.05);
+            border-color: rgba(79, 70, 229, 0.2);
+        }
+
+        .card-title {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            letter-spacing: -0.3px;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-accent {
+            background: rgba(79, 70, 229, 0.08);
+            color: #4f46e5;
+            border: 1px solid rgba(79, 70, 229, 0.15);
+        }
+
+        .badge-success {
+            background: rgba(13, 148, 136, 0.08);
+            color: #0d9488;
+            border: 1px solid rgba(13, 148, 136, 0.15);
+        }
+
+        .brief-content {
+            line-height: 1.75;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 400;
+            white-space: pre-line;
+        }
+
+        .list-container {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.45);
+            border: 1px solid rgba(45, 43, 40, 0.04);
+            transition: all 0.25s ease;
+        }
+
+        .list-item:hover {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(79, 70, 229, 0.15);
+            box-shadow: 0 4px 12px rgba(45, 43, 40, 0.02);
+            transform: translateX(2px);
+        }
+
+        .item-title {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .priority-badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .priority-high {
+            background: rgba(225, 29, 72, 0.08);
+            color: #e11d48;
+            border: 1px solid rgba(225, 29, 72, 0.15);
+        }
+
+        .priority-medium {
+            background: rgba(217, 119, 6, 0.08);
+            color: #d97706;
+            border: 1px solid rgba(217, 119, 6, 0.15);
+        }
+
+        .priority-low {
+            background: rgba(115, 115, 115, 0.08);
+            color: #737373;
+            border: 1px solid rgba(115, 115, 115, 0.15);
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 0.6rem;
+        }
+
+        .status-ok {
+            background-color: var(--success-color);
+            box-shadow: 0 0 8px rgba(13, 148, 136, 0.4);
+        }
+
+        .status-warning {
+            background-color: var(--warning-color);
+            box-shadow: 0 0 8px rgba(217, 119, 6, 0.4);
+        }
+
+        .health-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+        }
+
+        @media (max-width: 600px) {
+            .health-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .health-item {
+            background: rgba(255, 255, 255, 0.45);
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            border: 1px solid rgba(45, 43, 40, 0.04);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.25s ease;
+        }
+
+        .health-item:hover {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(79, 70, 229, 0.15);
+            box-shadow: 0 4px 12px rgba(45, 43, 40, 0.02);
+        }
+
+        .health-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .health-val {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>Gemini Agent OS</h1>
+                <div style="color: var(--text-secondary); margin-top: 0.35rem; font-size: 0.95rem; font-weight: 500;">Personal OS Dashboard</div>
+            </div>
+            <div class="header-actions">
+                <button id="refresh-btn" class="refresh-button" onclick="triggerManualRefresh()">
+                    <svg class="refresh-icon" viewBox="0 0 24 24">
+                        <path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                    </svg>
+                    Refresh
+                </button>
+                <div class="system-time" id="clock">Loading system state...</div>
+            </div>
+        </header>
+
+        <div class="grid-container">
+            <!-- Morning Brief Panel (Spans 2 columns) -->
+            <div class="card" style="grid-column: span 2;">
+                <div class="card-title">
+                    <span>Morning Brief & Focus</span>
+                    <span id="brief-date" class="badge badge-success"></span>
+                </div>
+                <div class="brief-content" id="brief-summary">
+                    Loading latest brief focus...
+                </div>
+            </div>
+
+            <!-- Top Active Tasks Panel -->
+            <div class="card">
+                <div class="card-title">
+                    <span>Top Active Tasks</span>
+                    <span id="task-count" class="badge badge-accent">0 active</span>
+                </div>
+                <ul class="list-container" id="task-list">
+                    <!-- Tasks loaded dynamically -->
+                </ul>
+            </div>
+
+            <!-- Projects State Panel -->
+            <div class="card">
+                <div class="card-title">
+                    <span>Active Projects</span>
+                    <span id="project-count" class="badge badge-accent">0 active</span>
+                </div>
+                <ul class="list-container" id="project-list">
+                    <!-- Projects loaded dynamically -->
+                </ul>
+            </div>
+
+            <!-- System Status Panel (Spans 2 columns) -->
+            <div class="card" style="grid-column: span 2;">
+                <div class="card-title">
+                    <span>System Diagnostics & Health</span>
+                </div>
+                <div class="health-grid">
+                    <div class="health-item">
+                        <span class="health-label">FastAPI API Endpoint</span>
+                        <span class="health-val" id="health-api"><span class="status-indicator status-warning"></span>Offline</span>
+                    </div>
+                    <div class="health-item">
+                        <span class="health-label">Gemini API Connection</span>
+                        <span class="health-val" id="health-gemini">Checking...</span>
+                    </div>
+                    <div class="health-item">
+                        <span class="health-label">Data Layer Location</span>
+                        <span class="health-val" id="health-env">-</span>
+                    </div>
+                    <div class="health-item">
+                        <span class="health-label">Deployment Status</span>
+                        <span class="health-val" id="health-deploy">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchDashboard() {
+            try {
+                // Fetch with a cache-buster query parameter to bypass browser static caching
+                const response = await fetch(`./dashboard.json?_t=${Date.now()}`);
+                if (!response.ok) {
+                    throw new Error("HTTP error " + response.status);
+                }
+                const data = await response.json();
+                
+                // Clock/Update Time
+                const updatedTime = new Date(data.updated_at).toLocaleString('en-US', { 
+                    hour: 'numeric', 
+                    minute: '2-digit', 
+                    second: '2-digit', 
+                    hour12: true 
+                });
+                document.getElementById('clock').textContent = `Sync: ${updatedTime}`;
+
+                // Brief Summary
+                document.getElementById('brief-summary').textContent = data.brief.summary;
+                const briefGen = new Date(data.brief.generated_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+                document.getElementById('brief-date').textContent = `Generated: ${briefGen}`;
+
+                // Task list
+                const taskList = document.getElementById('task-list');
+                taskList.innerHTML = '';
+                document.getElementById('task-count').textContent = `${data.tasks.active_count} active`;
+                
+                if (data.tasks.top && data.tasks.top.length > 0) {
+                    data.tasks.top.forEach(task => {
+                        const li = document.createElement('li');
+                        li.className = 'list-item';
+                        
+                        const priClass = `priority-${task.priority.toLowerCase()}`;
+                        
+                        li.innerHTML = `
+                            <span class="item-title">${task.title}</span>
+                            <span class="priority-badge ${priClass}">${task.priority}</span>
+                        `;
+                        taskList.appendChild(li);
+                    });
+                } else {
+                    taskList.innerHTML = '<li class="list-item"><span class="item-title" style="color: var(--text-secondary);">No active tasks</span></li>';
+                }
+
+                // Projects list
+                const projectList = document.getElementById('project-list');
+                projectList.innerHTML = '';
+                
+                if (data.projects && data.projects.length > 0) {
+                    document.getElementById('project-count').textContent = `${data.projects.length} active`;
+                    data.projects.forEach(project => {
+                        const li = document.createElement('li');
+                        li.className = 'list-item';
+                        li.innerHTML = `
+                            <span class="item-title">${project.name}</span>
+                            <span class="priority-badge priority-medium">${project.current_phase || project.status}</span>
+                        `;
+                        projectList.appendChild(li);
+                    });
+                } else {
+                    document.getElementById('project-count').textContent = '0 active';
+                    projectList.innerHTML = '<li class="list-item"><span class="item-title" style="color: var(--text-secondary);">No active projects</span></li>';
+                }
+
+                // Health
+                const apiHealth = data.system_health.app_status === 'ok';
+                document.getElementById('health-api').innerHTML = apiHealth 
+                    ? `<span class="status-indicator status-ok"></span>Active`
+                    : `<span class="status-indicator status-warning"></span>Offline`;
+                
+                document.getElementById('health-gemini').textContent = data.system_health.gemini_configured ? 'Operational' : 'Missing Key';
+                document.getElementById('health-env').textContent = data.timezone;
+                document.getElementById('health-deploy').textContent = data.system_health.deployment_status;
+
+            } catch (err) {
+                console.error("Error loading dashboard data:", err);
+                document.getElementById('clock').textContent = "Sync error";
+            }
+        }
+
+        async function triggerManualRefresh() {
+            const btn = document.getElementById('refresh-btn');
+            btn.classList.add('refreshing');
+            btn.disabled = true;
+            try {
+                await fetchDashboard();
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setTimeout(() => {
+                    btn.classList.remove('refreshing');
+                    btn.disabled = false;
+                }, 600); // Visual spin duration
+            }
+        }
+
+        // Fetch on load
+        fetchDashboard();
+        // Poll every 10 seconds for automatic background updates
+        setInterval(fetchDashboard, 10000);
+    </script>
+</body>
+</html>

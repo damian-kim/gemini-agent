@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "checked_at": "2026-06-07T18:49:20.032938+00:00",
+  "environment": "development",
+  "app": {
+    "status": "ok",
+    "health_endpoint": "ok",
+    "version": "0.1.0",
+    "database_status": "ok"
+  },
+  "gemini": {
+    "configured": true,
+    "model": "gemini-2.5-flash",
+    "last_successful_call_at": null
+  },
+  "data_layer": {
+    "root_exists": true,
+    "inputs_write_guard_enabled": true,
+    "last_backup_at": null
+  },
+  "deployment": {
+    "target": "oracle-ampere-a1-flex",
+    "docker_compose_status": "not_deployed_yet",
+    "public_url": null
+  }
+}
